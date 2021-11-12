@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var lastview:TextView
     lateinit var predlastview:TextView
     private val token = "d4c9eea0d00fb43230b479793d6aa78f"
-    val cityName = intent.getStringExtra("cityName")
+    private lateinit var callback: (result: String?, error: String)->Unit
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,50 @@ class MainActivity : AppCompatActivity() {
         lastview = findViewById<TextView>(R.id.vlaj)
         predlastview = findViewById<TextView>(R.id.napr)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        callback = {result, error ->
+            if(result != null) {
+                val json = JSONObject(result)
+                val wheather = json.getJSONArray("weather")
+                val icoName = wheather.getJSONObject(0).getString("icon")
+                val wind = json.getJSONObject("wind")
+                val mains = json.getJSONObject("main")
+                val secmain = json.getJSONObject("main")
+
+
+                runOnUiThread {
+                    textView.text = json.getString("name")
+                    secview.text = wind.getDouble("speed").toString()
+                    tempView.text= mains.getDouble("temp").toString()
+                    lastview.text = secmain.getDouble("humidity").toString()
+                    predlastview.text = wind.getDouble("deg").toString()
+
+                }
+                HTTP.getImage("https://openweathermap.org/img/w/${icoName}.png") {
+                        bitmap, error ->
+                    if(bitmap !=null)
+                    {
+
+                        var imageView = findViewById<ImageView>(R.id.ico)
+                        runOnUiThread{
+                            imageView.setImageBitmap(bitmap)
+                        }
+                    }
+
+                }
+            }
+
+            else
+            {
+                runOnUiThread{
+                    textView.text = error
+                }
+            }
+        }
+
         checkPermission()
+
+
 
 
     }
@@ -73,6 +117,7 @@ class MainActivity : AppCompatActivity() {
                 val lon = locationResult.locations[iocIndex].longitude
                 val lat = locationResult.locations[iocIndex].latitude
                 onGetCoordinate(lat, lon)
+
             }
         }
         
@@ -81,53 +126,26 @@ class MainActivity : AppCompatActivity() {
         {
             fusedLocationClient.removeLocationUpdates(mLocationCallback)
             val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${token}&lang=RU"
-            HTTP.requestGET(url) {result, error ->
-                if(result != null) {
-                    val json = JSONObject(result)
-                    val wheather = json.getJSONArray("weather")
-                    val icoName = wheather.getJSONObject(0).getString("icon")
-                    val wind = json.getJSONObject("wind")
-                    val mains = json.getJSONObject("main")
-                    val secmain = json.getJSONObject("main")
-
-
-                    runOnUiThread {
-                        textView.text = json.getString("name")
-                            secview.text = wind.getDouble("speed").toString()
-                        tempView.text= mains.getDouble("temp").toString()
-                        lastview.text = secmain.getDouble("humidity").toString()
-                        predlastview.text = wind.getDouble("deg").toString()
-
-                    }
-                    HTTP.getImage("https://openweathermap.org/img/w/${icoName}.png") {
-                        bitmap, error ->
-                        if(bitmap !=null)
-                        {
-
-                            var imageView = findViewById<ImageView>(R.id.ico)
-                            runOnUiThread{
-                                imageView.setImageBitmap(bitmap)
-                            }
-                        }
-
-                    }
-                }
-
-                else
-                {
-                    runOnUiThread{
-                        textView.text = error
-                    }
-                }
-
-
-
-            }
+            HTTP.requestGET(url, callback)
         }
 
     fun selectCity(view: View) {
         startActivity( Intent(this, CityListActivity::class.java) )
     }
+    /*
+    val cityName = intent.getStringExtra("city_name")
+    fun onGetSec(q:String)
+    {
+
+        val url = " https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${token}"
+        HTTP.requestGET(url, callback)
+    }
+
+     */
+
+
+
+
 
 
 }
