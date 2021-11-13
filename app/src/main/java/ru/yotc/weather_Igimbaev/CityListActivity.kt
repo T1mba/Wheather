@@ -19,7 +19,11 @@ class CityListActivity : AppCompatActivity() {
          var cityNames  = arrayOf(
             "Moscow",
             "Yoshkar-Ola",
-            "Kazan"
+            "Kazan",
+                 "Saint Petersburg",
+                 "Sochi",
+                 "Shakhunya"
+
         )
 
 

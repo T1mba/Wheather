@@ -41,30 +41,34 @@
         android:layout_height="wrap_content"
         android:id="@+id/headers"
         android:text="Ваш город: "
+        android:textSize="30sp"
         android:gravity="center"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/header"
+        android:textColor="#7f32a8"
         android:gravity="center"
+        android:textSize="30sp"
         android:text=" "/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="Скорость ветра"
+        android:textSize="30sp"
+        android:text="Скорость ветра: "
         android:gravity="center"/>
     <TextView
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/headesr"
-
+        android:textColor="#7f32a8"
+        android:textSize="30sp"
         android:text=" "/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:textSize="30sp"
         android:text="Температура: "
         android:gravity="center"/>
     <TextView
@@ -77,25 +81,43 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:textSize="30sp"
         android:text="Влажность: "
+
         android:gravity="center"/>
     <TextView
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="#7f32a8"
         android:id="@+id/vlaj"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:textSize="30sp"
         android:text="Направление ветра: "
         android:gravity="center"/>
     <TextView
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="#7f32a8"
         android:id="@+id/napr"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="Описание погоды: "
+            android:gravity="center"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="#7f32a8"
+            android:id="@+id/desc" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

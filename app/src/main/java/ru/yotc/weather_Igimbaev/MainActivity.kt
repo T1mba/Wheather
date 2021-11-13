@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var tempView:TextView
     lateinit var lastview:TextView
     lateinit var predlastview:TextView
+    lateinit var desview: TextView
     private val token = "d4c9eea0d00fb43230b479793d6aa78f"
     private var callback: (result: String?, error: String)->Unit =  {result, error ->
         if(result != null) {
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             val wind = json.getJSONObject("wind")
             val mains = json.getJSONObject("main")
             val secmain = json.getJSONObject("main")
-
+            val des = wheather.getJSONObject(0)
 
             runOnUiThread {
                 textView.text = json.getString("name")
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 tempView.text= mains.getDouble("temp").toString()
                 lastview.text = secmain.getDouble("humidity").toString()
                 predlastview.text = wind.getDouble("deg").toString()
+                desview.text = des.getString("description")
 
             }
             val splash = findViewById<ImageView>(R.id.splash)
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         tempView = findViewById<TextView>(R.id.temp)
         lastview = findViewById<TextView>(R.id.vlaj)
         predlastview = findViewById<TextView>(R.id.napr)
+        desview = findViewById<TextView>(R.id.desc)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
 
@@ -140,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         val name = data.getStringExtra("cityName")
-        val url = " https://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=${token}"
+        val url = " https://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=${token}&lang=ru"
         HTTP.requestGET(url, callback)
 
 
