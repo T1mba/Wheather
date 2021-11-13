@@ -3,7 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
+    <ImageView
+        android:scaleType="fitXY"
+        android:elevation="999dp"
+
+        android:id="@+id/splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/secwith" />
+
+
 
     <ImageView
         android:layout_width="match_parent"
@@ -85,6 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Список городов"
-        android:onClick="selectCity"/>
+        android:onClick="selectCity"
+       />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

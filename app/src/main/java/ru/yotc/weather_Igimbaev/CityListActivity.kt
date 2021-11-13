@@ -16,7 +16,7 @@ class CityListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_list)
-         var names = arrayOf(
+         var cityNames  = arrayOf(
             "Moscow",
             "Yoshkar-Ola",
             "Kazan"
@@ -24,17 +24,18 @@ class CityListActivity : AppCompatActivity() {
 
 
         list = findViewById<ListView>(R.id.cityList)
-       list.adapter = ArrayAdapter(this,R.layout.city_list_item,names)
+       list.adapter = ArrayAdapter(this,R.layout.city_list_item,cityNames )
 
         list.setOnItemClickListener { parent, view, position, id ->
-            val mainIntent = Intent(this, MainActivity::class.java)
-            val cityName = names[id.toInt()]
+            val cityName = cityNames [position]
 
-            // запоминаем выбранное название города
-            mainIntent.putExtra("city_name", cityName)
+// запоминаем выбранное название города в параметрах
+            val newIntent = Intent()
+            newIntent.putExtra("cityName", cityName)
+            setResult(RESULT_OK, newIntent)
 
-            // возвращаемся на основной экран (Activity)
-            startActivity( mainIntent )
+// заверщаем текущий activity
+            finish();
         }
 
     }
