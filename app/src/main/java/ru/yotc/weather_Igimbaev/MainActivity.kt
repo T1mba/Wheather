@@ -6,13 +6,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import org.json.JSONObject
 import org.w3c.dom.Text
@@ -28,7 +32,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var tempView:TextView
     lateinit var lastview:TextView
     lateinit var predlastview:TextView
+    private lateinit var dailyInfoRecyclerView: RecyclerView
     lateinit var desview: TextView
+    private val weatherList = ArrayList<Weather>()
     private val token = "d4c9eea0d00fb43230b479793d6aa78f"
     private var callback: (result: String?, error: String)->Unit =  {result, error ->
         if(result != null) {
@@ -90,7 +96,9 @@ class MainActivity : AppCompatActivity() {
 
 
         checkPermission()
-
+                dailyInfoRecyclerView = findViewById(R.id.dailyInfoRecyclerView)
+        dailyInfoRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        val weatherAdapter = WeatherAdapter(weatherList, this)
 
 
 
@@ -154,16 +162,44 @@ class MainActivity : AppCompatActivity() {
                 1)
 
     }
-    /*
-    val cityName = intent.getStringExtra("city_name")
-    fun onGetSec(q:String)
+    fun getMassiv (lat: Double, lon: Double)
     {
+        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${token}&lang=ru&units=metric"
+        HTTP.requestGET(url) {result, error ->
+            if(result != null) {
+                // перед заполнением очищаем список
+                weatherList.clear()
 
-        val url = " https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${token}"
-        HTTP.requestGET(url, callback)
+                val json = JSONObject(result)
+                val list = json.getJSONArray("list")
+
+                for(i in 0 until  list.length()){
+                    val item = list.getJSONObject(i)
+                    val weather = item.getJSONArray("weather").getJSONObject(0)
+                    weatherList.add(
+                            Weather(
+                                    item.getInt("dt"),
+                                    item.getJSONObject("main").getDouble("temp"),
+                                    item.getJSONObject("main").getInt("humidity"),
+                                    weather.getString("icon"),
+                                    weather.getString("description"),
+                                    item.getJSONObject("wind").getDouble("speed"),
+                                    item.getJSONObject("wind").getInt("deg"),
+                                    item.getString("dt_txt")
+
+                            )
+                    )
+                }
+                runOnUiThread{
+                    dailyInfoRecyclerView.adapter?.notifyDataSetChanged()
+                }
+                }
+            else
+                Log.d("KETLOG",error)
+            }
     }
 
-     */
+
 
 
 

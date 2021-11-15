@@ -1,34 +1,29 @@
 package ru.yotc.weather_Igimbaev
 
-import android.R.layout.test_list_item
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 
 class CityListActivity : AppCompatActivity() {
-  lateinit var  list: ListView
-
-
-
+    lateinit var  list: ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_list)
-         var cityNames  = arrayOf(
-            "Moscow",
-            "Yoshkar-Ola",
-            "Kazan",
-                 "Saint Petersburg",
-                 "Sochi",
-                 "Shakhunya"
+        var cityNames  = arrayOf(
+                "Moscow",
+                "Yoshkar-Ola",
+                "Kazan",
+                "Saint Petersburg",
+                "Sochi",
+                "Shakhunya"
 
         )
 
 
         list = findViewById<ListView>(R.id.cityList)
-       list.adapter = ArrayAdapter(this,R.layout.city_list_item,cityNames )
+        list.adapter = ArrayAdapter(this,R.layout.city_list_item,cityNames )
 
         list.setOnItemClickListener { parent, view, position, id ->
             val cityName = cityNames [position]
@@ -46,7 +41,4 @@ class CityListActivity : AppCompatActivity() {
 
 
 
-    }
-
-
-
+}
