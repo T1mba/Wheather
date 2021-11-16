@@ -1,6 +1,7 @@
 package ru.yotc.weather_Igimbaev
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yotc.myapplication.HTTP
+import java.lang.Exception
+import java.util.ArrayList
 
 class WeatherAdapter (
     private val values: ArrayList<Weather>,
@@ -40,32 +43,42 @@ class WeatherAdapter (
 
     // заполняет визуальный элемент данными
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tempTextView.text = "${values[position].mainTemp} C"
-        // onIconLoad.invoke(holder.iconImageView, values[position].weatherIcon)
+            holder.tempTextView.text = "${values[position].mainTemp} C"
+            holder.timeView.text = values[position].dtTxt
+            holder.windView.text = values[position].windSpeed.toString()
+            holder.degView.text = values[position].windDeg.toString()
+            holder.humView.text = values[position].mainHumidity.toString()
+            holder.DescView.text = values [position].weatherDescription
+            // onIconLoad.invoke(holder.iconImageView, values[position].weatherIcon)
 
-        holder.container.setOnClickListener {
-            //кликнули на элемент списка
-            itemClickListener?.invoke(values[position])
-        }
+            holder.container.setOnClickListener {
+                //кликнули на элемент списка
+                itemClickListener?.invoke(values[position])
+            }
 
-        HTTP.getImage("https://openweathermap.org/img/w/${values[position].weatherIcon}.png") { bitmap, error ->
-            if (bitmap != null) {
-                activity.runOnUiThread {
-                    try {
-                        holder.iconImageView.setImageBitmap(bitmap)
-                    } catch (e: Exception) {
+            HTTP.getImage("https://openweathermap.org/img/w/${values[position].weatherIcon}.png") { bitmap, error ->
+                if (bitmap != null) {
+                    activity.runOnUiThread {
+                        try {
+                            holder.iconImageView.setImageBitmap(bitmap)
+                        } catch (e: Exception) {
 
+                        }
                     }
-                }
-            } else
-                Log.d("KEILOG", error)
-        }
+                } else
+                    Log.d("KEILOG", error)
+            }
     }
 
     //Реализация класса ViewHolder, хранящего ссылки на виджеты.
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var iconImageView: ImageView = itemView.findViewById(R.id.ico)
-        var tempTextView: TextView = itemView.findViewById(R.id.temp)
+        var iconImageView: ImageView = itemView.findViewById(R.id.weather_icon)
+        var tempTextView: TextView = itemView.findViewById(R.id.weather_temp)
         var container: LinearLayout = itemView.findViewById(R.id.container)
+        var timeView: TextView = itemView.findViewById(R.id.weather_time)
+        var windView: TextView = itemView.findViewById(R.id.weather_wind)
+        var degView: TextView = itemView.findViewById(R.id.weather_wind_deg)
+        var humView: TextView = itemView.findViewById(R.id.weather_humi)
+        var DescView: TextView = itemView.findViewById(R.id.weather_Desc)
     }
 }

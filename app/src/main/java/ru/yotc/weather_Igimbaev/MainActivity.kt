@@ -22,6 +22,7 @@ import org.json.JSONObject
 import org.w3c.dom.Text
 import ru.yotc.myapplication.HTTP
 import java.lang.Exception
+import java.nio.file.WatchEvent
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,58 +33,58 @@ class MainActivity : AppCompatActivity() {
     lateinit var tempView:TextView
     lateinit var lastview:TextView
     lateinit var predlastview:TextView
+    private lateinit var callback: (result: String?, error: String)->Unit
     private lateinit var dailyInfoRecyclerView: RecyclerView
     lateinit var desview: TextView
     private val weatherList = ArrayList<Weather>()
     private val token = "d4c9eea0d00fb43230b479793d6aa78f"
-    private var callback: (result: String?, error: String)->Unit =  {result, error ->
-        if(result != null) {
-            val json = JSONObject(result)
-            val wheather = json.getJSONArray("weather")
-            val icoName = wheather.getJSONObject(0).getString("icon")
-            val wind = json.getJSONObject("wind")
-            val mains = json.getJSONObject("main")
-            val secmain = json.getJSONObject("main")
-            val des = wheather.getJSONObject(0)
 
-            runOnUiThread {
-                textView.text = json.getString("name")
-                secview.text = wind.getDouble("speed").toString()
-                tempView.text= mains.getDouble("temp").toString()
-                lastview.text = secmain.getDouble("humidity").toString()
-                predlastview.text = wind.getDouble("deg").toString()
-                desview.text = des.getString("description")
-
-            }
-            val splash = findViewById<ImageView>(R.id.splash)
-            splash.elevation = 0F
-            HTTP.getImage("https://openweathermap.org/img/w/${icoName}.png") {
-                bitmap, error ->
-                if(bitmap !=null)
-                {
-
-                    var imageView = findViewById<ImageView>(R.id.ico)
-                    runOnUiThread{
-                        imageView.setImageBitmap(bitmap)
-                    }
-                }
-
-            }
-        }
-
-        else
-        {
-            runOnUiThread{
-                textView.text = error
-            }
-        }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+            setContentView(R.layout.activity_main)
+        callback = { result, error ->
+            if(result != null) {
+// перед заполнением очищаем список
+                weatherList.clear()
 
+                val json = JSONObject(result)
+                val list = json.getJSONArray("list")
+
+// перебираем json массив
+                for(i in 0 until list.length()){
+                    val item = list.getJSONObject(i)
+                    val weather = item.getJSONArray("weather").getJSONObject(0)
+
+// добавляем в список новый элемент
+                    weatherList.add(
+                            Weather(
+                                    item.getInt("dt"),
+                                    item.getJSONObject("main").getDouble("temp"),
+                                    item.getJSONObject("main").getInt("humidity"),
+                                    weather.getString("icon"),
+                                    weather.getString("description"),
+                                    item.getJSONObject("wind").getDouble("speed"),
+                                    item.getJSONObject("wind").getInt("deg"),
+                                    item.getString("dt_txt")
+
+                            )
+                    )
+
+                }
+
+                runOnUiThread {
+
+// уведомляем визуальный элемент, что данные изменились
+                    dailyInfoRecyclerView.adapter?.notifyDataSetChanged()
+
+                }
+            }
+            else
+                Log.d("KEILOG", error)
+
+        }
 
         textView = findViewById<TextView>(R.id.header)
         secview = findViewById<TextView>(R.id.headesr)
@@ -99,7 +100,10 @@ class MainActivity : AppCompatActivity() {
                 dailyInfoRecyclerView = findViewById(R.id.dailyInfoRecyclerView)
         dailyInfoRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         val weatherAdapter = WeatherAdapter(weatherList, this)
-
+        weatherAdapter.setItemClickListener {
+            weather ->
+        }
+        dailyInfoRecyclerView.adapter = weatherAdapter
 
 
     }
@@ -140,7 +144,9 @@ class MainActivity : AppCompatActivity() {
         fun onGetCoordinate(lat: Double, lon: Double)
         {
             fusedLocationClient.removeLocationUpdates(mLocationCallback)
-            val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${token}&lang=RU"
+           // val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${token}&lang=RU"
+            //HTTP.requestGET(url, callback)
+            val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${token}&lang=RU"
             HTTP.requestGET(url, callback)
         }
 
@@ -151,7 +157,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         val name = data.getStringExtra("cityName")
-        val url = " https://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=${token}&lang=ru"
+        val url = " https://api.openweathermap.org/data/2.5/forecast?q=${name}&units=metric&appid=${token}&lang=ru"
         HTTP.requestGET(url, callback)
 
 
@@ -162,48 +168,13 @@ class MainActivity : AppCompatActivity() {
                 1)
 
     }
-    fun getMassiv (lat: Double, lon: Double)
-    {
-        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${token}&lang=ru&units=metric"
-        HTTP.requestGET(url) {result, error ->
-            if(result != null) {
-                // перед заполнением очищаем список
-                weatherList.clear()
-
-                val json = JSONObject(result)
-                val list = json.getJSONArray("list")
-
-                for(i in 0 until  list.length()){
-                    val item = list.getJSONObject(i)
-                    val weather = item.getJSONArray("weather").getJSONObject(0)
-                    weatherList.add(
-                            Weather(
-                                    item.getInt("dt"),
-                                    item.getJSONObject("main").getDouble("temp"),
-                                    item.getJSONObject("main").getInt("humidity"),
-                                    weather.getString("icon"),
-                                    weather.getString("description"),
-                                    item.getJSONObject("wind").getDouble("speed"),
-                                    item.getJSONObject("wind").getInt("deg"),
-                                    item.getString("dt_txt")
-
-                            )
-                    )
-                }
-                runOnUiThread{
-                    dailyInfoRecyclerView.adapter?.notifyDataSetChanged()
-                }
-                }
-            else
-                Log.d("KETLOG",error)
-            }
-    }
-
-
-
-
-
-
-
 
 }
+
+
+
+
+
+
+
+
