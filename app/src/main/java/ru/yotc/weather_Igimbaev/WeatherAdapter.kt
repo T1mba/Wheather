@@ -1,5 +1,6 @@
 package ru.yotc.weather_Igimbaev
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.util.Log
@@ -12,7 +13,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yotc.myapplication.HTTP
 import java.lang.Exception
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WeatherAdapter (
     private val values: ArrayList<Weather>,
@@ -42,6 +44,7 @@ class WeatherAdapter (
     override fun getItemCount(): Int = values.size
 
     // заполняет визуальный элемент данными
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.tempTextView.text = "${values[position].mainTemp} C"
             holder.timeView.text = values[position].dtTxt
