@@ -9,4 +9,5 @@ data class Weather(
         val windSpeed: Double,
         val windDeg: Int,
         val dtTxt: String
+
 )

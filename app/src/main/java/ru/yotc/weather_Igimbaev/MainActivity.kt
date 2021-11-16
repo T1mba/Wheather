@@ -23,6 +23,9 @@ import org.w3c.dom.Text
 import ru.yotc.myapplication.HTTP
 import java.lang.Exception
 import java.nio.file.WatchEvent
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                 val json = JSONObject(result)
                 val list = json.getJSONArray("list")
 
+
 // перебираем json массив
                 for(i in 0 until list.length()){
                     val item = list.getJSONObject(i)
@@ -60,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 // добавляем в список новый элемент
                     weatherList.add(
                             Weather(
+
                                     item.getInt("dt"),
                                     item.getJSONObject("main").getDouble("temp"),
                                     item.getJSONObject("main").getInt("humidity"),
@@ -69,17 +74,25 @@ class MainActivity : AppCompatActivity() {
                                     item.getJSONObject("wind").getInt("deg"),
                                     item.getString("dt_txt")
 
+
                             )
                     )
+
 
                 }
 
                 runOnUiThread {
-
+                    showDetailsInfo(weatherList[0])
+                   textView.text = json.getJSONObject("city").getString("name")
+                    secview.text = weatherList[0].windSpeed.toString()
+                    tempView.text = weatherList[0].mainTemp.toString()
+                    desview.text = weatherList[0].weatherDescription
 // уведомляем визуальный элемент, что данные изменились
                     dailyInfoRecyclerView.adapter?.notifyDataSetChanged()
 
+
                 }
+
             }
             else
                 Log.d("KEILOG", error)
@@ -101,11 +114,16 @@ class MainActivity : AppCompatActivity() {
         dailyInfoRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         val weatherAdapter = WeatherAdapter(weatherList, this)
         weatherAdapter.setItemClickListener {
-            weather ->
+            runOnUiThread {
+                showDetailsInfo(it)
+            }
         }
         dailyInfoRecyclerView.adapter = weatherAdapter
 
 
+    }
+    private fun showDetailsInfo(weather: Weather) {
+        //TODO("Not yet implemented")
     }
     private fun checkPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
