@@ -2,7 +2,6 @@ package ru.yotc.weather_Igimbaev
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yotc.myapplication.HTTP
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,7 +45,12 @@ class WeatherAdapter (
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.tempTextView.text = "${values[position].mainTemp} C"
-            holder.timeView.text = values[position].dtTxt
+        val sdf_ = SimpleDateFormat("EEEE")
+        val date = Date(values[position].dt.toLong()*1000)
+        val dayName: String = sdf_.format(date)
+        holder.timeView.text = ("" + dayName + "\n" + values[position].dtTxt.substring(11,16) + "")
+        holder.arrow.rotation = values[position].windDeg.toFloat()
+        holder.windView.text = values[position].windDeg.toString()
 
             // onIconLoad.invoke(holder.iconImageView, values[position].weatherIcon)
 
@@ -55,6 +58,7 @@ class WeatherAdapter (
                 //кликнули на элемент списка
                 itemClickListener?.invoke(values[position])
             }
+
 
             HTTP.getImage("https://openweathermap.org/img/w/${values[position].weatherIcon}.png") { bitmap, error ->
                 if (bitmap != null) {
@@ -70,12 +74,14 @@ class WeatherAdapter (
             }
     }
 
+
     //Реализация класса ViewHolder, хранящего ссылки на виджеты.
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var iconImageView: ImageView = itemView.findViewById(R.id.weather_icon)
         var tempTextView: TextView = itemView.findViewById(R.id.weather_temp)
         var container: LinearLayout = itemView.findViewById(R.id.container)
         var timeView: TextView = itemView.findViewById(R.id.weather_time)
-
+         var arrow: ImageView = itemView.findViewById(R.id.arrow)
+        var windView: TextView = itemView.findViewById(R.id.wind)
     }
 }
