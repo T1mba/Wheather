@@ -2,6 +2,7 @@ package ru.yotc.weather_Igimbaev
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import ru.yotc.myapplication.HTTP
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class WeatherAdapter (
@@ -42,12 +46,24 @@ class WeatherAdapter (
     override fun getItemCount(): Int = values.size
 
     // заполняет визуальный элемент данными
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.tempTextView.text = "${values[position].mainTemp} C"
         val sdf_ = SimpleDateFormat("EEEE")
-        val date = Date(values[position].dt.toLong()*1000)
-        val dayName: String = sdf_.format(date)
+        var date: LocalDateTime? = null
+        var dayName = ""
+        val weekDays = arrayListOf<String>("Пн","Вт","Ср","Чт","Пн","Сб","Вс")
+        try {
+            date = LocalDateTime.parse(
+                    values[position].dtTxt,
+                    DateTimeFormatter.ofPattern("y-M-d H:m:s")
+            )
+            dayName = weekDays[date.dayOfWeek.ordinal]
+        }
+        catch (e: java.lang.Exception){
+            Log.d("tim",e.toString())
+        }
         holder.timeView.text = ("" + dayName + "\n" + values[position].dtTxt.substring(11,16) + "")
         holder.arrow.rotation = values[position].windDeg.toFloat()
         holder.windView.text = values[position].windDeg.toString()

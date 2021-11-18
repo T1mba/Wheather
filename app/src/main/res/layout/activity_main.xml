@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    >
     <ImageView
         android:scaleType="fitXY"
         android:elevation="999dp"
@@ -48,20 +48,20 @@
             android:layout_weight="2"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/headers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+           <ImageView
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:src="@drawable/info"
+               android:layout_gravity="center"
+               app:tint="#FFF">
 
-                android:text="Ваш город: "
-                android:textSize="18sp" />
+           </ImageView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/header"
                 android:textColor="#7f32a8"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:textSize="18sp"
                 android:text=" "/>
             <TextView
@@ -69,11 +69,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Скорость ветра: "
+                android:layout_gravity="center"
                 android:gravity="center"/>
             <TextView
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:id="@+id/headesr"
                 android:textColor="#7f32a8"
                 android:textSize="18sp"
@@ -84,7 +86,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="Температура: "
-
+                android:layout_gravity="center"
                 android:textSize="18sp" />
 
 
@@ -95,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/temp"
                 android:textSize="18sp"
-
+                android:layout_gravity="center"
                 android:textColor="#de1d10"
                 />
 
@@ -104,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-
+                android:layout_gravity="center"
                 android:text="Описание погоды: "
                 android:textSize="18sp" />
 
@@ -118,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
 
-
+                android:layout_gravity="center"
                 android:textColor="#7f32a8"
                 android:id="@+id/desc" />
             <TextView
@@ -126,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="Влажность: "
+                android:layout_gravity="center"
 
                 />
             <TextView
@@ -133,25 +136,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layout_gravity="center" 
                 android:textColor="#7f32a8"
                 android:id="@+id/vlaj"/>
 
 
         </LinearLayout>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
-   <androidx.recyclerview.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
 
-    android:id="@+id/dailyInfoRecyclerView"
-    android:background="@drawable/back"
-    />
-</ScrollView>
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:id="@+id/dailyInfoRecyclerView"
+            android:background="@drawable/back"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,13 +165,6 @@
         </LinearLayout>
     </LinearLayout>
 
-        <ImageView
-        android:id="@+id/ico"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:gravity="center"
-
-        />
 
 
 
