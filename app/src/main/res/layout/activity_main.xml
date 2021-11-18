@@ -40,89 +40,161 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-
+            
         <LinearLayout
             android:id="@+id/detail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-           <ImageView
-               android:layout_width="50dp"
-               android:layout_height="50dp"
-               android:src="@drawable/info"
-               android:layout_gravity="center"
-               app:tint="#FFF">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom = "true"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="4"
+                    android:layout_height="wrap_content"
 
-           </ImageView>
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="#3CF1EBF1">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+
+                android:src="@drawable/info"
+                app:tint="#FFF">
+
+            </ImageView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/header"
-                android:textColor="#7f32a8"
-                android:layout_gravity="center"
+                android:textColor="#542d4c"
+
+                android:layout_gravity="center_horizontal"
                 android:textSize="18sp"
+
                 android:text=" "/>
-            <TextView
-                android:layout_width="wrap_content"
+
+                </LinearLayout>
+                        
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Скорость ветра: "
-                android:layout_gravity="center"
-                android:gravity="center"/>
-            <TextView
+                android:layout_weight="2.1"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:background="#3CF1EBF1">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/wind"
+                    app:tint="#FFF">
+
+                </ImageView>
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/headesr"
+                    android:textColor="#542d4c"
+                    android:textSize="18sp"
+                    android:text=" "/>
+            </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/headesr"
-                android:textColor="#7f32a8"
-                android:textSize="18sp"
-                android:text=" "/>
+                android:layout_alignParentBottom = "true"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="4"
+                    android:layout_height="wrap_content"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="#3CF1EBF1">
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_horizontal"
 
-                android:text="Температура: "
-                android:layout_gravity="center"
-                android:textSize="18sp" />
+                            android:src="@drawable/humidity"
+                            app:tint="#FFF">
+                        </ImageView>
+                        <TextView
 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
 
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/temp"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:textColor="#de1d10"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="center"
-                android:text="Описание погоды: "
-                android:textSize="18sp" />
-
-
+                            android:layout_gravity="center"
+                            android:textColor="#542d4c"
+                            android:id="@+id/desc" />
 
 
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="#3CF1EBF1">
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_horizontal"
 
-            <TextView
+                            android:src="@drawable/pressure"
+                            app:tint="#FFF">
+                        </ImageView>
+                        <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/temp"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        android:textColor="#542d4c"
+                        />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
 
-                android:layout_gravity="center"
-                android:textColor="#7f32a8"
-                android:id="@+id/desc" />
+                    </LinearLayout>
+
+
+
+            </LinearLayout>
+                
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,28 +203,27 @@
                 android:layout_gravity="center"
 
                 />
-            <TextView
+                <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_gravity="center" 
-                android:textColor="#7f32a8"
-                android:id="@+id/vlaj"/>
+                    android:id="@+id/vlaj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#542d4c"
+                    android:textSize="20sp" />
 
+
+            </LinearLayout>
 
         </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dailyInfoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:id="@+id/dailyInfoRecyclerView"
-            android:background="@drawable/back"
-            />
-
-        <LinearLayout
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="10mm"
             android:id="@+id/buttonPanel"
@@ -163,20 +234,22 @@
                 android:onClick="selectCity"
                 android:text="Список городов" />
         </LinearLayout>
-    </LinearLayout>
 
 
 
 
-
-
-
-
-
-
+        </LinearLayout>
 
 
     </LinearLayout>
+
+
+
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
