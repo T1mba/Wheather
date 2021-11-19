@@ -16,9 +16,9 @@
 
 
 2. Далее в новом Layout создаём кастомный интерфейс для AlertDialog:
-![](./Design.png)
+![](./Design.PNG)
 
-![](./qwerty.JPG)
+![](./qwerty.PNG)
 
 
 
