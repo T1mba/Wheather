@@ -64,6 +64,21 @@ class WeatherAdapter (
         catch (e: java.lang.Exception){
             Log.d("tim",e.toString())
         }
+        val sdf = SimpleDateFormat("EEEE")
+        var dates: LocalDateTime? = null
+        var daynames = ""
+        val weekDay = arrayListOf<String>("Пн","Вт","Ср","Чт","Пн","Сб","Вс")
+        try {
+            date = LocalDateTime.parse(
+                    values[position].dtTxt,
+                    DateTimeFormatter.ofPattern("y-M-d'T'H:m:s")
+            )
+            dayName = weekDays[date.dayOfWeek.ordinal]
+        }
+        catch (e: java.lang.Exception){
+            Log.d("t1m",e.toString())
+        }
+        holder.timeView.text = ("" + daynames + "\n" + values[position].dtTxt.substring(11,16) + "")
         holder.timeView.text = ("" + dayName + "\n" + values[position].dtTxt.substring(11,16) + "")
         holder.arrow.rotation = values[position].windDeg.toFloat()
         holder.windView.text = values[position].windDeg.toString()
