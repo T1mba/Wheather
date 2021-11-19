@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_authentication"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:id="@+id/et_email"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="145dp"
-        android:hint="Email"
+        <TextView
 
-        android:textSize="30dp"/>
-    <EditText android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/et_email"
-        android:hint="Password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
 
-        android:textSize="30dp"
-        android:id="@+id/et_password"
-        />
+            android:text="Окно авторизации"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_centerVertical="true"/>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_password"
-        android:layout_marginTop="20dp"
-        >
-        <Button android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Авторизация"
-            android:layout_weight="1"
-            android:id="@+id/btn_sign_in"/>
-        <Button android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Отмена"
-            android:id="@+id/close"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:hint="Введите почту"
+            android:textSize="30dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint="Введите пароль"
+            android:layout_gravity="center"
+            android:textSize="30dp"/>
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="Авторизация"/>
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Отмена"/>
+
 
     </LinearLayout>
-</RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

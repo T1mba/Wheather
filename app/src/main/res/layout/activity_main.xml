@@ -229,10 +229,15 @@
             android:id="@+id/buttonPanel"
             >
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="selectCity"
                 android:text="Список городов" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="select"
+                    android:text="Перейти на окно" />
         </LinearLayout>
 
 

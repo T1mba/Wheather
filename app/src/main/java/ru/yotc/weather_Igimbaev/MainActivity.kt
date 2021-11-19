@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var secview: TextView
     lateinit var tempView: TextView
     lateinit var lastview: TextView
+    private lateinit var getServer:(result:String, error: String) -> Unit
     lateinit var predlastview: TextView
     private lateinit var callback: (result: String?, error: String) -> Unit
     private lateinit var dailyInfoRecyclerView: RecyclerView
@@ -66,7 +67,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+            getServer = {result, error ->
+                //Тут должен быть запрос на сервер
+            }
         callback = { result, error ->
             if (result != null) {
 // перед заполнением очищаем список
@@ -360,6 +363,10 @@ class MainActivity : AppCompatActivity() {
     fun selectCity(view: View) {
         startActivityForResult(Intent(this, CityListActivity::class.java),
                 1)
+    }
+
+    fun select(view: View) {
+        MyCustomDialog().show(supportFragmentManager, "Dialog")
     }
 
 }
